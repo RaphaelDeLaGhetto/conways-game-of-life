@@ -35,10 +35,10 @@ canvas {
 }
 
 #splash {
-    text-shadow: #000 0px 0px 4px, #000 0px 0px 4px, #000 0px 0px 4px;
+    text-shadow: #FFF 0px 0px 4px, #FFF 0px 0px 4px, #FFF 0px 0px 4px;
     text-align: center;
     font-size: 6em;
-    color: white;
+    color: #333333;
     margin: auto;
     width: 50%;
     padding-top: 2em;
