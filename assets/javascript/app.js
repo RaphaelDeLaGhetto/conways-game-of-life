@@ -6,12 +6,13 @@
     var board = null,
         cellSize = 20,
         interval = 550,
-        random = true,
+        chaos = true,
         delta = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
 
     var canvas = document.getElementById('canvas'),
         context = canvas.getContext('2d'),
-        controls = document.getElementById("controls");
+        controls = document.getElementById('controls'),
+        splash = document.getElementById('splash');
         
         
     context.fillStyle = "rgba(0, 0, 0, 0.8)";
@@ -20,7 +21,9 @@
     window.addEventListener('resize', resizeCanvas, false);
     
     
-    // Control events...
+    /**
+     * Stop/Go controller events...
+     */
     controls.addEventListener("click", toggleChaos);
     
     controls.addEventListener("mouseover", function() {
@@ -32,40 +35,32 @@
     });
 
     /**
-     * 
+     * Impose order or let all hell break loose
      */
     function toggleChaos() {
-        random = !random;
-        if (random) controls.style.backgroundImage = "url('/assets/images/go.gif')";
-        else controls.style.backgroundImage = "url('/assets/images/stop.gif')";
+        chaos = !chaos;
+        if (chaos) {
+            controls.style.backgroundImage = "url('/assets/images/go.gif')";
+            splash.innerHTML = "The earth was formless and void..."
+        }
+        else {
+            controls.style.backgroundImage = "url('/assets/images/stop.gif')";
+            splash.innerHTML = "Let there be life!"
+        }
+        splash.className = "visible";
     }
     
     /**
-     * 
-     */
-    function noOpacity() {
-        controls.style.opacity = 1;
-    }
- 
-    /**
-     * 
+     * Determines the viewport size and sizes the gameboard accordingly
      */
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      
-      
-      /**
-       * Your drawings need to be inside this function otherwise they will be reset when 
-       * you resize the browser window and the canvas goes will be cleared.
-       */
       drawStuff(); 
    }
-   resizeCanvas();
-   setInterval(drawStuff, interval);
 
     /**
-     * Generate a randomized game board
+     * Generate a chaotic game board
      * 
      * @param width - int
      * @param height - int
@@ -111,8 +106,7 @@
                     if (count < 2 || count > 3) row.push(0);
                     // Any live cell with two or three live neighbours lives on to the next generation.
                     else row.push(1);
-                }
-                else {
+                } else {
                     // Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
                     if (count == 3) row.push(1);
                     else row.push(0);
@@ -124,27 +118,29 @@
     }
  
     /**
-     * 
+     * Draw the gameboard
      */
     function drawStuff() {
+        splash.className = "hidden";
         
-        if (random || !board)
+        if (chaos || !board)
             makeBoard(Math.floor(window.innerWidth/cellSize), Math.floor(window.innerHeight/cellSize));
-        else
-            updateBoard();
+        else updateBoard();
         
         // Draw the board
         context.save();
         board.forEach(function(row, yIndex, boardArray) {
             row.forEach(function(cell, xIndex, rowArray) {
-//                context.fillStyle = "#FFFFFF";
-//                if (cell) context.fillStyle = "#000000";
-//                context.fillRect(xIndex * cellSize, yIndex * cellSize, cellSize, cellSize);
                 context.clearRect(xIndex * cellSize, yIndex * cellSize, cellSize, cellSize);
                 if (cell) context.fillRect(xIndex * cellSize, yIndex * cellSize, cellSize, cellSize);
-
             });
         });
         context.restore();
     }
+    
+    /**
+     * Size the canvas and set everything in motion
+     */
+    resizeCanvas();
+    setInterval(drawStuff, interval);
 })();
