@@ -1,8 +1,13 @@
 /* 2016-5-16 http://stackoverflow.com/questions/4288253/html5-canvas-100-width-height-of-viewport */
 
-* { margin:0; padding:0; } /* to remove the top and left whitespace */
+/* to remove the top and left whitespace */
+* { margin:0; padding:0; }
 
-html, body { width:100%; height:100%; } /* just to be sure these are full screen*/
+/* just to be sure these are full screen */
+html, body {
+    width:100%;
+    height:100%;
+}
 
 /*canvas { display:block; } /* To remove the scrollbars */
 
@@ -27,4 +32,26 @@ canvas {
     bottom: 40px;
     right: 40px;
     opacity: 0.6;
+}
+
+#splash {
+    text-shadow: #000 0px 0px 4px, #000 0px 0px 4px, #000 0px 0px 4px;
+    text-align: center;
+    font-size: 6em;
+    color: white;
+    margin: auto;
+    width: 50%;
+    padding-top: 2em;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+    /*transition: visibility 0s 2s, opacity 2s linear;*/
+    
+    transition: visibility 2s, 4s, opacity 4s;
 }
