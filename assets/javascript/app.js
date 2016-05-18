@@ -5,7 +5,7 @@
      */
     var board = null,
         cellSize = 20,
-        interval = 550,
+        interval = 300,
         chaos = true,
         delta = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
 
@@ -14,12 +14,8 @@
         controls = document.getElementById('controls'),
         splash = document.getElementById('splash');
         
-        
-    context.fillStyle = "rgba(0, 0, 0, 0.8)";
-
     // resize the canvas to fill browser window dynamically
     window.addEventListener('resize', resizeCanvas, false);
-    
     
     /**
      * Stop/Go controller events...
@@ -129,6 +125,7 @@
         
         // Draw the board
         context.save();
+        context.fillStyle = "rgba(255, 255, 255, 0.8)";
         board.forEach(function(row, yIndex, boardArray) {
             row.forEach(function(cell, xIndex, rowArray) {
                 context.clearRect(xIndex * cellSize, yIndex * cellSize, cellSize, cellSize);
