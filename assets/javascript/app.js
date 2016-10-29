@@ -4,9 +4,9 @@
      * Constants
      */
     var board = null,
-        cellSize = 20,
+        cellSize = 50,
         interval = 300,
-        chaos = true,
+        chaos = false,
         delta = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
 
     var canvas = document.getElementById('canvas'),
@@ -14,6 +14,12 @@
         controls = document.getElementById('controls'),
         splash = document.getElementById('splash');
         
+    var leftGhost = new Image(),
+        rightGhost = new Image();
+    leftGhost.src = 'assets/images/leftGhost.png';
+    rightGhost.src = 'assets/images/rightGhost.png';
+
+
     // resize the canvas to fill browser window dynamically
     window.addEventListener('resize', resizeCanvas, false);
     
@@ -35,14 +41,14 @@
      */
     function toggleChaos() {
         chaos = !chaos;
-        if (chaos) {
-            controls.style.backgroundImage = "url('/assets/images/go.gif')";
-            splash.innerHTML = "The earth was formless and void..."
-        }
-        else {
-            controls.style.backgroundImage = "url('/assets/images/stop.gif')";
-            splash.innerHTML = "Let there be life!"
-        }
+//        if (chaos) {
+            controls.style.backgroundImage = "url('/assets/images/owl.png')";
+            splash.innerHTML = "Spooooooooky!"
+//        }
+//        else {
+//            controls.style.backgroundImage = "url('/assets/images/stop.gif')";
+//            splash.innerHTML = "Let there be life!"
+//        }
         splash.className = "visible";
     }
     
@@ -118,9 +124,12 @@
      */
     function drawStuff() {
         splash.className = "hidden";
+        context.globalAlpha = 0.5;
         
-        if (chaos || !board)
+        if (chaos || !board) {
             makeBoard(Math.floor(window.innerWidth/cellSize), Math.floor(window.innerHeight/cellSize));
+            chaos = false;
+        }
         else updateBoard();
         
         // Draw the board
@@ -129,7 +138,15 @@
         board.forEach(function(row, yIndex, boardArray) {
             row.forEach(function(cell, xIndex, rowArray) {
                 context.clearRect(xIndex * cellSize, yIndex * cellSize, cellSize, cellSize);
-                if (cell) context.fillRect(xIndex * cellSize, yIndex * cellSize, cellSize, cellSize);
+                if (cell) {
+                  var flip = Math.floor(Math.random() * 2);
+                  var img;
+                  if (Math.floor(Math.random() * 2))
+                    img = leftGhost;
+                  else
+                    img = rightGhost;
+                  context.drawImage(img, xIndex * cellSize, yIndex * cellSize, cellSize, cellSize);
+                }
             });
         });
         context.restore();

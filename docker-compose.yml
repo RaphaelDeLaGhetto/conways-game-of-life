@@ -1,0 +1,9 @@
+nginx:
+  image: nginx
+  restart: always
+  environment:
+    - VIRTUAL_HOST=chocobuttons.com
+    - LETSENCRYPT_HOST=chocobuttons.com
+    - LETSENCRYPT_EMAIL=daniel@capitolhill.ca
+  volumes:
+    - ./:/usr/share/nginx/html
