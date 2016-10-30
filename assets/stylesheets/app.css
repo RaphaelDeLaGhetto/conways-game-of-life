@@ -10,7 +10,8 @@ html, body {
 }
 
 canvas {
-    background-image: url(https://upload.wikimedia.org/wikipedia/commons/e/e7/Friendly_pumpkin.jpg);
+    /*background-image: url(https://upload.wikimedia.org/wikipedia/commons/e/e7/Friendly_pumpkin.jpg);*/
+    background-image: url(../images/eva.jpg);
     display: block;
     position: absolute;
     height: 100vh;
